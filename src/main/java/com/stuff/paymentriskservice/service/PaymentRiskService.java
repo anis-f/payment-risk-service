@@ -5,18 +5,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class PaymentRiskService {
 
+    private static int TOTAL_COUNT = 0;
+    private static int ACCEPTED_COUNT = 0;
 
-    public String calculateRisk(double amount) {
-
+    public synchronized String calculateRisk() {
         String risk = null;
-        if (amount <= 1000)
-            risk = "LOW";
-        else
-            if (amount > 1000 && amount <= 10000)
-                risk = "MEDIUM";
-            else
-                risk = "HIGH";
+        double acceptedPaymentThreshold = TOTAL_COUNT * 0.7;
 
+        if (ACCEPTED_COUNT <= acceptedPaymentThreshold) {
+            risk = "ACCEPTED";
+            ACCEPTED_COUNT++;
+        }
+        else
+            risk = "REJECTED";
+        TOTAL_COUNT++;
         return risk;
     }
 }

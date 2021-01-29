@@ -1,4 +1,4 @@
-package com.stuff.paymentriskservice.domain;
+package com.stuff.paymentriskservice.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
